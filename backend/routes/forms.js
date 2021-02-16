@@ -38,6 +38,9 @@ router.put("/:id", auth, async (req, res) => {
 
 
 router.post("/", auth, async (req, res) => {
+  const validateFormInput = require("../validation/form");
+  const { errors, isValid } = validateFormInput(req.body);
+  if (!isValid) return responseService.sendBadRequest(res, errors);
   let formObj = {
     name: req.body.name,
     region: req.body.region,
